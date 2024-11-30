@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QueFlow.Models
 {
@@ -21,6 +22,7 @@ namespace QueFlow.Models
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
         public virtual ICollection<Answer>? Answers { get; set; }
+        [NotMapped]
         public IEnumerable<SelectListItem>? Categ { get; set; } 
     }
 }
