@@ -41,17 +41,16 @@ namespace QueFlow.Models
                         PasswordHash = hasher.HashPassword(null, "User1!")
                     }
                 );
-                
                 context.UserRoles.AddRange(
                     new IdentityUserRole<string>
                     {
-                        RoleId = "2c5e174e-3b0e-446f-86af- 483d56fd7210",
-                        UserId = "8e445865-a24d-4543-a6c6- 9443d048cdb0"
+                        RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                        UserId = "8e445865-a24d-4543-a6c6-9443d048cdb0"
                     },
                     new IdentityUserRole<string>
                     {
-                        RoleId = "2c5e174e-3b0e-446f-86af- 483d56fd7212",
-                        UserId = "8e445865-a24d-4543-a6c6- 9443d048cdb2"
+                        RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7212",
+                        UserId = "8e445865-a24d-4543-a6c6-9443d048cdb2"
                     }
                 );
                 context.SaveChanges();
