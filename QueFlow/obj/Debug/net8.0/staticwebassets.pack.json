@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Users\\nedel\\source\\repos\\QueFlow\\QueFlow\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\QueFlow.bundle.scp.css",
-      "PackagePath": "staticwebassets\\QueFlow.bundle.scp.css"
+      "PackagePath": "staticwebassets\\QueFlow.mxlj4p4iqh.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\nedel\\source\\repos\\QueFlow\\QueFlow\\wwwroot\\css\\site.css",
@@ -243,6 +243,10 @@
     {
       "Id": "C:\\Users\\nedel\\source\\repos\\QueFlow\\QueFlow\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.QueFlow.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.QueFlow.Microsoft.AspNetCore.StaticWebAssets.props",
