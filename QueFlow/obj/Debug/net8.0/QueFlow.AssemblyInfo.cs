@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QueFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+874656bf9c5d54d908ba432e015f0ee70a4eacd3")]
 [assembly: System.Reflection.AssemblyProductAttribute("QueFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QueFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
