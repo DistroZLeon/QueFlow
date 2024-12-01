@@ -1,0 +1,27 @@
+﻿@model QueFlow.Models.Category
+
+<h2>Adaugare Categorie</h2>
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-6 offset-3">
+			<form method="post" asp-action="New" asp-controller="Categories">
+				<div class="form-group">
+					<div asp-validation-summary="All" class="text-danger"></div><br />
+					<div class="form-group">
+						<label asp-for="Name" class="form-label">Denumirea clasei</label>
+						<input asp-for="Name" class="form-control"/>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<br />
+					<div>
+						<label asp-for="Description" class="form-label">Descrierea clasei</label>
+						<textarea asp-for="Description" class="form-control"></textarea>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+				</div>
+				<br />
+				<button class="btn btn-succes" type="submit">Adauga categoria</button>
+			</form>
+		</div>
+	</div>
+</div>

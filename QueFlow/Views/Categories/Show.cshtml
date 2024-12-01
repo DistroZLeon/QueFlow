@@ -1,0 +1,23 @@
+﻿@model QueFlow.Models.Category
+
+<h2>@ViewBag.Title</h2>
+
+<br/>
+
+<p>@Model.Name</p>
+@if(Model.Description!=null)
+{
+	<p>@Model.Description</p>
+}
+
+<form method="post" asp-action="Delete" asp-controller="Categories" asp-route-id="@Model.Id">
+	<button class="btn btn-danger" type="submit">Sterge categoria</button>
+</form>
+
+<br />
+
+<a class="btn alert-success" asp-action="Index" asp-controller="Categories">Inapoi la lista de categorii</a>
+
+<br />
+<hr/>
+<br />
