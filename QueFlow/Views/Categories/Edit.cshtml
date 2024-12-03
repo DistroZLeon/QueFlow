@@ -20,8 +20,14 @@
 					</div>
 				</div>
 				<br />
-				<button class="btn btn-succes" type="submit">Efectuati modificarile categoriei</button>
+				<button class="btn btn-success" type="submit">Efectuati modificarile categoriei</button>
 			</form>
+			<hr />
 		</div>
+		<form method="post" asp-action="Delete" asp-controller="Categories" asp-route-id="@Model.Id">
+			<button class="btn btn-danger" type="submit">Sterge categoria</button>
+		</form>
+
+		<br />
 	</div>
 </div>
