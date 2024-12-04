@@ -578,10 +578,6 @@ C:\Users\alyst\source\repos\QueFlow\QueFlow\obj\Debug\net8.0\QueFlow.pdb
 C:\Users\alyst\source\repos\QueFlow\QueFlow\obj\Debug\net8.0\QueFlow.genruntimeconfig.cache
 C:\Users\alyst\source\repos\QueFlow\QueFlow\obj\Debug\net8.0\ref\QueFlow.dll
 C:\Users\alyst\source\repos\QueFlow\QueFlow\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
-C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\System.Formats.Asn1.dll
 C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\System.IO.Pipelines.dll
 C:\Users\alyst\Source\Repos\QueFlow\QueFlow\bin\Debug\net8.0\System.Text.Encodings.Web.dll
