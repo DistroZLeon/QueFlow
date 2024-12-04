@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QueFlow.Models
 {
@@ -11,7 +12,8 @@ namespace QueFlow.Models
         public DateTime DatePosted { get; set; }
         public int? QuestionId {  get; set; }
         public virtual Question? Q { get; set; }
-        public string? UserId { get; set; } 
+        public string? UserId { get; set; }
+        [ForeignKey("UserId")]
         public virtual ApplicationUser? User { get; set; }
     }
 }

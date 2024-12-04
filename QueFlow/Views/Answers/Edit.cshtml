@@ -1,0 +1,11 @@
+﻿@model QueFlow.Models.Answer
+<h2>Editarea raspunsului</h2>
+<br />
+<form method="post" action="/Answers/Edir.@Model.Id">
+	<label>Continutul raspunsului</label>
+	<textarea asp-for="Text">@Model.Text</textarea>
+	<span asp-asp-validation-for="Text" class="tesxt-danger"></span>
+	<br />
+	<hr />
+	<button class="btn btn-primary" type="submit" >Editeaza raspunsul</button>
+</form>
