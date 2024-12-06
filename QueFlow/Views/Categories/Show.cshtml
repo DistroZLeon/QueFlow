@@ -1,17 +1,30 @@
 ﻿@model QueFlow.Models.Category
 
 <h2>@ViewBag.Title</h2>
-
 <br/>
 
-<p>@Model.Name</p>
+
+<a style="color:darkgreen;font-weight:bolder;font-size:larger;" asp-action="Index" asp-controller="Categories">@Model.Name</a>
 @if(Model.Description!=null)
 {
-	<p>@Model.Description</p>
+	<p class="card-text">@Model.Description</p>
 }
-
-<a class="btn alert-success" asp-action="Index" asp-controller="Categories">Inapoi la lista de categorii</a>
-
 <br />
 <hr/>
 <br />
+@foreach(var que in Model.Questions)
+{
+	<div class="card">
+		<div class="card-body justify-content-center">
+			<a style="color:darkgreen" class="card-title" asp-action="Show" asp-controller="Questions" asp-route-id="@que.Id">@que.Title</a>
+			<p class="card-text">@que.Content</p>
+			<div class="d-flex justify-content-between flex-row mt-5 card-footer">
+				<small><i class="bi bi-person"></i>@que.User.UserName</small>
+				<small style="color:darkgreen">@que.Date</small>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+}
+	
