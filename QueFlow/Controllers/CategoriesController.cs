@@ -30,7 +30,7 @@ namespace QueFlow.Controllers
         }
         public ActionResult Show(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = db.Categories.Include("Questions").Include("Questions.User").Where(a=>a.Id==id).First();
             return View(category);
         }
         [Authorize(Roles ="Admin")]

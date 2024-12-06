@@ -11,14 +11,13 @@
 @foreach(var category in ViewBag.Categories)
 {
 	@Html.Label("Name","Denumirea categoriei")
-	<p>@category.Name</p>
-
-	<a class="btn alert-success" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">Afisare intrebari categorie</a>
-	@if (User.IsInRole("Admin"))
-	{
-		<a class="btn alert-success" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a>
-	}
-
+	<div >
+		<a style="color:darkgreen;font-weight:bolder;" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+		@if (User.IsInRole("Admin"))
+		{
+			<a class="btn btn-otline-success w-auto" style="color:darkgreen;" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a>
+		}
+	</div>
 	<br/>
 	<hr />
 	<br/>
