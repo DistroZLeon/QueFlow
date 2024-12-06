@@ -1,0 +1,144 @@
+﻿
+
+@model QueFlow.Models.Question
+@if(ViewBag.Msg != null){
+
+    <h2 class="alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Msg</h2>
+}
+
+
+<div class="d-flex justify-content-center">
+
+    <a class="btn btn-outline-success" href="/Questions/Index/">Afisare intrebari</a>
+
+    <a class="btn btn-outline-success" href="/Questions/New">Pune o intrebare</a>
+
+</div>
+
+<br />
+
+<div class="card">
+
+    <partial name="QuestionInfo" model="Model" />
+
+    <hr />
+    @if(ViewBag.AfisareButoane){
+        <div class="d-flex flex-row justify-content-between">
+        
+            <a asp-controller="Questions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Editează inrebarea</a>
+
+            <form method="post" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
+
+                <button class="btn btn-danger" type="submit">Sterge intrebarea</button>
+
+            </form>
+
+        </div>
+    }
+
+</div>
+
+<br />
+<br />
+
+@foreach (var answer in Model.Answers)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <p>@answer.Text</p>
+                    <small>@answer.DatePosted</small>
+
+                </div>
+                <br>
+                @if (answer.UserId == ViewBag.UserCurent) 
+                {
+                    <div class="d-flex">
+
+                        <div>
+
+                            <a class="btn btn-outline-primary" asp-action="Edit" asp-controller="Answers" asp-route-id="@answer.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                        </div>
+                    <div>
+
+                        <form method="post" asp-controller="Answers" asp-action="Delete" asp-route-id="@answer.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                        </form>
+
+                    </div>
+                    </div>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <div class="d-flex">
+
+                    <div>
+
+                        <form method="post" asp-controller="Answers" asp-action="Delete" asp-route-id="@answer.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                        </form>
+
+                    </div>
+
+                  </div>
+                }
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" asp-controller="Questions" asp-action="Show">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="QuestionId" value="@Model.Id" />
+
+                        <label>Continut raspuns</label>
+                        <br />
+
+                        <textarea name="Text" class="form-control"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <br />
+
+                        <button class="btn btn-success " type="submit">Adauga raspunsul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>

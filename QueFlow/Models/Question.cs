@@ -10,6 +10,8 @@ namespace QueFlow.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Titlul este obligatoriu")]
+        [StringLength(100, ErrorMessage = "Dimensiunea maxima este de 100 caractere")]
+        [MinLength(5, ErrorMessage = "Dimensiunea minima este de 5 caractere")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Continutul este obligatoriu")]
