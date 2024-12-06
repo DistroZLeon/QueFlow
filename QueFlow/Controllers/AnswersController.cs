@@ -27,12 +27,13 @@ namespace QueFlow.Controllers
             if (ans.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin")){
                 db.Answers.Remove(ans);
                 db.SaveChanges();
+                TempData["message"] = "Raspunsul a fost sters";
                 return Redirect("/Questions/Show/" + ans.QuestionId);
             }
             else
             {
                 TempData["message"] = "Nu aveti permisiunile necesare pentru a sterge acest raspuns! (Esti asa de sensibil incat simti nevoia sa stergi raspunsul cuiva?)";
-                return Redirect("/Questions/Show"+ans.QuestionId);
+                return Redirect("/Questions/Show/"+ans.QuestionId);
             }
         }
         public IActionResult Edit(int id)
@@ -46,7 +47,7 @@ namespace QueFlow.Controllers
             else
             {
                 TempData["message"] = "Nu aveti permisiunile necesare sa editati acest raspuns!";
-                return Redirect("/Questions/Show" + ans.QuestionId);
+                return Redirect("/Questions/Show/" + ans.QuestionId);
             }
         }
         [HttpPost]
@@ -59,7 +60,8 @@ namespace QueFlow.Controllers
                 {
                     ans.Text = nou.Text;
                     db.SaveChanges();
-                    return Redirect("/Questions/Show" + ans.QuestionId);
+                    TempData["message"] = "Raspunsul a fost editat";
+                    return Redirect("/Questions/Show/" + ans.QuestionId);
                 }
                 else
                 {
@@ -69,7 +71,7 @@ namespace QueFlow.Controllers
             else
             {
                 TempData["message"] = "Nu aveti permisiunile necesare sa editati acest raspuns! (Te crezi Dumnezeu sa moderezi raspunsurile altora?)";
-                return Redirect("/Questions/Show" + ans.QuestionId);
+                return Redirect("/Questions/Show/" + ans.QuestionId);
             }
         }
     }

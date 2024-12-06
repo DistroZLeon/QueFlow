@@ -1,0 +1,32 @@
+﻿@model QueFlow.Models.Question
+
+<h2 class="text-center mt-5">Editare articol</h2>
+
+<br />
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+
+            <form method="post" asp-action="EditCat" asp-controller="Questions" asp-route-id="@Model.Id">
+                <div class="form-group">
+                    <label for="se completeaza acest camp">Selectati categoria</label>
+                    <br />
+                    <select asp-for="CategoryId" asp-items="Model.Categ" class="form-control">
+                        <option value="">Selectati categoria</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    <br />
+                </div>
+
+                <button class="btn btn-sm btn-success" type="submit">Modifica intrebarea</button>
+
+            </form>
+            <form method="post" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
+
+                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge intrebarea</button>
+
+            </form>
+        </div>
+    </div>
+</div>

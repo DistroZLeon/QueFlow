@@ -12,13 +12,19 @@
 {
 	@Html.Label("Name","Denumirea categoriei")
 	<p>@category.Name</p>
-	
+
 	<a class="btn alert-success" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">Afisare intrebari categorie</a>
-	<a class="btn alert-success" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a>
+	@if (User.IsInRole("Admin"))
+	{
+		<a class="btn alert-success" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a>
+	}
 
 	<br/>
 	<hr />
 	<br/>
 }
 <br/>
-<a class="btn alert-success" asp-action="New" asp-controller="Categories">Adauga o noua categorie</a>
+@if (User.IsInRole("Admin"))
+{
+	<a class="btn alert-success" asp-action="New" asp-controller="Categories">Adauga o noua categorie</a>
+}

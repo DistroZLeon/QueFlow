@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QueFlow.Data;
 using QueFlow.Models;
 
@@ -15,7 +16,6 @@ namespace QueFlow.Controllers
         {
             db = context;
         }
-        [Authorize(Roles ="User,Admin")]
         public ActionResult Index()
         {
             if (TempData.ContainsKey("message"))
@@ -28,7 +28,6 @@ namespace QueFlow.Controllers
             ViewBag.Categories = categories;
             return View();
         }
-        [Authorize(Roles = "User,Admin")]
         public ActionResult Show(int id)
         {
             Category category = db.Categories.Find(id);
@@ -83,7 +82,17 @@ namespace QueFlow.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            Category categ= db.Categories.Find(id);
+            Category categ= db.Categories.Include("Questions")
+                                         .Where(que => que.Id == id)
+                                         .First();
+            foreach (var que in categ.Questions)
+            {
+                Question question = db.Questions.Include("Answers")
+                                            .Where(q => q.Id == que.Id)
+                                            .First();
+                foreach (var ans in question.Answers) db.Answers.Remove(ans);
+                db.Questions.Remove(que);
+            }
             db.Categories.Remove(categ);
             db.SaveChanges();
             TempData["message"] = "Felicitari, ai eliminat o categorie inocenta ce avea o familie iubitoare!";
