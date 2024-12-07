@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alyst\\source\\repos\\QueFlow\\QueFlow\\QueFlow.csproj": {}
+    "C:\\Users\\alyst\\Source\\Repos\\QueFlow\\QueFlow\\QueFlow.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alyst\\source\\repos\\QueFlow\\QueFlow\\QueFlow.csproj": {
+    "C:\\Users\\alyst\\Source\\Repos\\QueFlow\\QueFlow\\QueFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alyst\\source\\repos\\QueFlow\\QueFlow\\QueFlow.csproj",
+        "projectUniqueName": "C:\\Users\\alyst\\Source\\Repos\\QueFlow\\QueFlow\\QueFlow.csproj",
         "projectName": "QueFlow",
-        "projectPath": "C:\\Users\\alyst\\source\\repos\\QueFlow\\QueFlow\\QueFlow.csproj",
+        "projectPath": "C:\\Users\\alyst\\Source\\Repos\\QueFlow\\QueFlow\\QueFlow.csproj",
         "packagesPath": "C:\\Users\\alyst\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\alyst\\source\\repos\\QueFlow\\QueFlow\\obj\\",
         "projectStyle": "PackageReference",

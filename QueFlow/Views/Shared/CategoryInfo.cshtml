@@ -1,0 +1,8 @@
+﻿<div class="card-body justify-content-center">
+	<h5><a style="color:darkgreen" class="card-title" asp-action="Show" asp-controller="Questions" asp-route-id="@Model.Id">@Model.Title</a></h5>
+	<h6><p class="card-text">@Model.Content</p></h6>
+	<div class="d-flex justify-content-between flex-row mt-5 card-footer">
+		<h7><small><i class="bi bi-person"></i>@Model.User.UserName</small></h7>
+		<h7><small style="color:darkgreen">@Model.Date</small></h7>
+	</div>
+</div>

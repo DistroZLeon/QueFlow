@@ -10,17 +10,16 @@
 
 @foreach(var category in ViewBag.Categories)
 {
-	@Html.Label("Name","Denumirea categoriei")
+		<h3>@Html.Label("Name", "Denumirea categoriei")</h3>
 	<div >
-		<a style="color:darkgreen;font-weight:bolder;" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+		<h4><a style="color:darkgreen;font-weight:bolder;" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a></h4>
 		@if (User.IsInRole("Admin"))
 		{
-			<a class="btn btn-otline-success w-auto" style="color:darkgreen;" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a>
+			<h5><a class="btn btn-otline-success w-auto" style="color:darkgreen;" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a></h5>
 		}
 	</div>
 	<br/>
 	<hr />
-	<br/>
 }
 <br/>
 @if (User.IsInRole("Admin"))
