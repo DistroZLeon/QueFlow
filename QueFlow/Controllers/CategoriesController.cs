@@ -25,12 +25,63 @@ namespace QueFlow.Controllers
             var categories = from category in db.Categories
                              orderby category.Name
                              select category;
-            ViewBag.Categories = categories;
+            var search = "";
+            ViewBag.SearchString = search;
+
+            int per_page = 4;
+            int totalItems=categories.Count();
+
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset =(currentPage-1)*per_page ;
+            }
+            var paginatedCategories=categories.Skip(offset).Take(per_page);
+            ViewBag.lastPage = Math.Ceiling((float)totalItems / (float)per_page);
+            ViewBag.Categories = paginatedCategories;
+
+            if (search!="")
+            {
+                ViewBag.PageBaseURL = "/Categories/Index/?search=" + search + "&page";
+            }
+            else
+            {
+                ViewBag.PageBaseURL = "/Categories/Index/?page";
+            }
+
             return View();
         }
         public ActionResult Show(int id)
         {
             Category category = db.Categories.Include("Questions").Include("Questions.User").Where(a=>a.Id==id).First();
+
+            var search = "";
+            ViewBag.SearchString = search;
+
+            int per_page = 4;
+            int totalItems=category.Questions.Count();
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset =(currentPage-1)*per_page ;
+            }
+
+            var pagedQuestions=category.Questions.Skip(offset).Take(per_page).ToList();
+            category.Questions = pagedQuestions;
+            ViewBag.lastPage= Math.Ceiling((float)totalItems / (float)pagedQuestions.Count());
+            if (search != "")
+            {
+                ViewBag.PageBaseURL = "Categories/Show/id="+id+"&?search="+search + "&page";
+            }
+            else
+            {
+                ViewBag.PageBaseURL = "Categories/Show/id=" + id + "&?page";
+            }
+
             return View(category);
         }
         [Authorize(Roles ="Admin")]
