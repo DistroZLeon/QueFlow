@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using QueFlow.Data;
 using QueFlow.Models;
 
@@ -51,11 +53,68 @@ namespace QueFlow.Controllers
                 .Where(r=>roleNames.Contains(r.Name)).Select(r=>r.Id).First();
             return View(user);
         }
+        [HttpPost]
         public async Task<ActionResult> Edit(string id, ApplicationUser newuser, [FromForm] string newrole)
         {
             var user= db.Users.Find(id);
-            //user.AllRoles = GetAllRoles();
-            return View(user);
+            user.AllRoles = GetAllRoles();
+            if (ModelState.IsValid)
+            {
+                user.Desc = newuser.Desc;
+                user.ProfPic= newuser.ProfPic;
+                var roles = db.Roles.ToList();
+                foreach (var role in roles)
+                {
+                    await userManager.RemoveFromRoleAsync(user, role.Name);                
+                }
+                var roleName=await roleManager.FindByIdAsync(newrole);
+                await userManager.AddToRoleAsync(user,roleName.ToString());
+                db.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult Delete(string id) 
+        {
+            var user = db.Users.Include("Questions").Include("Answers")
+                                .Where(a=>a.Id==id).First();
+            if (user.Answers.Count() > 0)
+            {
+                foreach (var answer in user.Answers)
+                {
+                    db.Answers.Remove(answer);
+                }
+            }
+            if (user.Questions.Count() > 0)
+            {
+                foreach (var question in user.Questions)
+                {
+                    foreach(var ans in question.Answers)
+                    {
+                        db.Answers.Remove(ans);
+                    }
+                    db.Questions.Remove(question);
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllRoles()
+        {
+            var selectList= new List<SelectListItem>();
+            var roles= from role in db.Roles select role;
+            foreach (var role in roles)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = role.Id.ToString(),
+                    Text = role.Name.ToString()
+                });
+            }
+            return selectList;
         }
     }
 }
