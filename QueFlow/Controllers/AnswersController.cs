@@ -27,12 +27,12 @@ namespace QueFlow.Controllers
             if (ans.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin")){
                 db.Answers.Remove(ans);
                 db.SaveChanges();
-                TempData["message"] = "Raspunsul a fost sters";
+                TempData["message"] = "The answer has been deleted";
                 return Redirect("/Questions/Show/" + ans.QuestionId);
             }
             else
             {
-                TempData["message"] = "Nu aveti permisiunile necesare pentru a sterge acest raspuns! (Esti asa de sensibil incat simti nevoia sa stergi raspunsul cuiva?)";
+                TempData["message"] = "You do not have permission to delete another user's answer";
                 return Redirect("/Questions/Show/"+ans.QuestionId);
             }
         }
@@ -46,7 +46,7 @@ namespace QueFlow.Controllers
             }
             else
             {
-                TempData["message"] = "Nu aveti permisiunile necesare sa editati acest raspuns!";
+                TempData["message"] = "You do not have permission to edit another user's answer";
                 return Redirect("/Questions/Show/" + ans.QuestionId);
             }
         }
@@ -60,7 +60,7 @@ namespace QueFlow.Controllers
                 {
                     ans.Text = nou.Text;
                     db.SaveChanges();
-                    TempData["message"] = "Raspunsul a fost editat";
+                    TempData["message"] = "The answer has been edited";
                     return Redirect("/Questions/Show/" + ans.QuestionId);
                 }
                 else
@@ -70,7 +70,7 @@ namespace QueFlow.Controllers
             }
             else
             {
-                TempData["message"] = "Nu aveti permisiunile necesare sa editati acest raspuns! (Te crezi Dumnezeu sa moderezi raspunsurile altora?)";
+                TempData["message"] = "You do not have permission to edit another user's answer";
                 return Redirect("/Questions/Show/" + ans.QuestionId);
             }
         }

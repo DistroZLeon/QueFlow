@@ -8,19 +8,19 @@
 				<div class="form-group">
 					<div asp-validation-summary="All" class="text-danger"></div><br />
 					<div class="form-group">
-						<label asp-for="Name" class="form-label">Denumirea categoriei</label>
+						<label asp-for="Name" class="form-label">Category name</label>
 						<input asp-for="Name" class="form-control"/>
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<br />
 					<div>
-						<label asp-for="Description" class="form-label">Descrierea categoriei</label>
+						<label asp-for="Description" class="form-label">Category description</label>
 						<textarea asp-for="Description" class="form-control"></textarea>
 						<span asp-validation-for="Description" class="text-danger"></span>
 					</div>
 				</div>
 				<br />
-				<button class="btn btn-success" type="submit">Adauga categoria</button>
+				<button class="btn btn-success" type="submit">Add category</button>
 			</form>
 		</div>
 	</div>

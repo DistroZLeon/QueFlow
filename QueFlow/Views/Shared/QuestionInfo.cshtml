@@ -12,11 +12,11 @@
 
         @if (Model.UserId == ViewBag.UserCurent)
         {
-            <a class="btn btn-success" href="/Questions/Edit/@Model.Id">Editare intrebare</a>
+            <a class="btn btn-success" href="/Questions/Edit/@Model.Id">Edit question</a>
         }
         else if (User.IsInRole("Admin"))
         {
-            <a class="btn btn-success" href="/Questions/EditCat/@Model.Id">Editare categorie intrebare</a>
+            <a class="btn btn-success" href="/Questions/EditCat/@Model.Id">Edit question category</a>
         }
         <span class="alert-success px-1 align-content-center">@Model.Date</span>
 

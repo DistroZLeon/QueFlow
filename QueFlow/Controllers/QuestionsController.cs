@@ -28,11 +28,53 @@ namespace QueFlow.Controllers
         {
             SetAccessRights();
             var questions = db.Questions.Include("Category").Include("User");
-            ViewBag.Questions = questions;
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.Msg = TempData["message"].ToString();
             }
+            var search = "";
+            if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
+            {
+                search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
+                List<int> articleIds = db.Questions.Where
+                                        (
+                                         at => at.Title.Contains(search)
+                                         || at.Content.Contains(search)
+                                        ).Select(a => a.Id).ToList();
+                List<int> articleIdsOfCommentsWithSearchString = db.Answers
+                                        .Where
+                                        (
+                                         c => c.Text.Contains(search)
+                                        ).Select(c => (int)c.QuestionId).ToList();
+                List<int> mergedIds = articleIds.Union(articleIdsOfCommentsWithSearchString).ToList();
+                questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                      .Include("Category")
+                                      .Include("User")
+                                      .OrderByDescending(a => a.Date);
+
+            }
+
+            ViewBag.SearchString = search;
+            int _perPage = 5;
+            int totalItems = questions.Count();
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
+            var offset = 0;
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * _perPage;
+            }
+            var paginatedQuestions = questions.Skip(offset).Take(_perPage);
+            ViewBag.lastPage = Math.Ceiling((float)totalItems / (float)_perPage);
+            ViewBag.Questions = paginatedQuestions;
+            if (search != "")
+            {
+                ViewBag.PaginationBaseUrl = "/Questions/Index/?search=" + search + "&page";
+            }
+            else
+            {
+                ViewBag.PaginationBaseUrl = "/Questions/Index/?page";
+            }
+
             return View();
         }
         public IActionResult Show(int id)
@@ -87,7 +129,7 @@ namespace QueFlow.Controllers
             {
                 db.Questions.Add(question);
                 db.SaveChanges();
-                TempData["message"] = "Intrebarea a fost publicata cu success";
+                TempData["message"] = "The question has been posted";
                 return RedirectToAction("Index");
             }
             else
@@ -107,7 +149,7 @@ namespace QueFlow.Controllers
                 return View(question);
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa faceti modificati intrebarea altui utilizator";
+                TempData["message"] = "You do not have permission to edit another user's question";
                 return Redirect("/Questions/Show/" + question.Id.ToString());
             }
 
@@ -124,7 +166,7 @@ namespace QueFlow.Controllers
                     intrebare.Content = question.Content;
                     intrebare.CategoryId = question.CategoryId;
                     db.SaveChanges();
-                    TempData["message"] = "Intrebarea a fost modificata";
+                    TempData["message"] = "The question has been modified";
                     return RedirectToAction("Index");
 
                 }
@@ -135,7 +177,7 @@ namespace QueFlow.Controllers
                 }
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa faceti modificati intrebarea altui utilizator";
+                TempData["message"] = "You do not have permission to edit another user's question";
                 return RedirectToAction("Index");
             }
 
@@ -151,7 +193,7 @@ namespace QueFlow.Controllers
                 return View(question);
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa faceti modificati intrebarea altui utilizator";
+                TempData["message"] = "You do not have permission to edit another user's question";
                 return Redirect("/Questions/Show/" + question.Id.ToString());
             }
 
@@ -165,7 +207,7 @@ namespace QueFlow.Controllers
                     Question intrebare = db.Questions.Find(question.Id);
                     intrebare.CategoryId = question.CategoryId;
                     db.SaveChanges();
-                    TempData["message"] = "Intrebarea a fost modificata";
+                    TempData["message"] = "The question has been modified";
                     return RedirectToAction("Index");
 
                 }
@@ -176,7 +218,7 @@ namespace QueFlow.Controllers
                 }
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa faceti modificati intrebarea altui utilizator";
+                TempData["message"] = "You do not have permission to edit another user's question";
                 return RedirectToAction("Index");
             }
 
@@ -192,13 +234,13 @@ namespace QueFlow.Controllers
                 foreach (var ans in question.Answers) db.Answers.Remove(ans);
                 db.Questions.Remove(question);
                 db.SaveChanges();
-                TempData["message"] = "Intrebarea a fost stearsa";
+                TempData["message"] = "The question has been deleted";
 
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa stergeti intrebarea altui utilizator";
+                TempData["message"] = "You do not have permission to delete another user's question";
                 return Redirect("/Questions/Show/" + question.Id.ToString());
             }
 

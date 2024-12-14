@@ -5,36 +5,11 @@
 
     <h2 class="alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Msg</h2>
 }
-
-
-<div class="d-flex justify-content-center">
-
-    <a class="btn btn-outline-success" href="/Questions/Index/">Afisare intrebari</a>
-
-    <a class="btn btn-outline-success" href="/Questions/New">Pune o intrebare</a>
-
-</div>
-
-<br />
-
-<div class="card">
+<div class="card questions">
 
     <partial name="QuestionInfo" model="Model" />
 
     <hr />
-    @if(ViewBag.AfisareButoane){
-        <div class="d-flex flex-row justify-content-between">
-        
-            <a asp-controller="Questions" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Editează inrebarea</a>
-
-            <form method="post" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
-
-                <button class="btn btn-danger" type="submit">Sterge intrebarea</button>
-
-            </form>
-
-        </div>
-    }
 
 </div>
 
@@ -53,6 +28,7 @@
 
                     <p>@answer.Text</p>
                     <small>@answer.DatePosted</small>
+                    <div><i class="bi bi-person"></i>@answer.User.UserName</div>
 
                 </div>
                 <br>
@@ -62,14 +38,14 @@
 
                         <div>
 
-                            <a class="btn btn-outline-primary" asp-action="Edit" asp-controller="Answers" asp-route-id="@answer.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+                            <a class="btn btn-outline-primary" asp-action="Edit" asp-controller="Answers" asp-route-id="@answer.Id"><i class="bi bi-pencil-square"></i>Edit answer</a>
 
                         </div>
                     <div>
 
                         <form method="post" asp-controller="Answers" asp-action="Delete" asp-route-id="@answer.Id">
 
-                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Delete answer</button>
 
                         </form>
 
@@ -84,7 +60,7 @@
 
                         <form method="post" asp-controller="Answers" asp-action="Delete" asp-route-id="@answer.Id">
 
-                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Delete answer</button>
 
                         </form>
 
@@ -120,14 +96,14 @@
 
                         <input type="hidden" name="QuestionId" value="@Model.Id" />
 
-                        <label>Continut raspuns</label>
+                        <label>Answer content</label>
                         <br />
 
                         <textarea name="Text" class="form-control"></textarea>
                         <span asp-validation-for="Content" class="text-danger"></span>
                         <br />
 
-                        <button class="btn btn-success " type="submit">Adauga raspunsul</button>
+                        <button class="btn btn-success " type="submit">Add answer</button>
 
                     </div>
 

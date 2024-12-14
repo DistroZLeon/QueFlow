@@ -10,21 +10,21 @@
 
             <form method="post" asp-action="EditCat" asp-controller="Questions" asp-route-id="@Model.Id">
                 <div class="form-group">
-                    <label for="se completeaza acest camp">Selectati categoria</label>
+                    <label for="se completeaza acest camp">Select a category</label>
                     <br />
                     <select asp-for="CategoryId" asp-items="Model.Categ" class="form-control">
-                        <option value="">Selectati categoria</option>
+                        <option value="">Select a category</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                     <br />
                 </div>
 
-                <button class="btn btn-sm btn-success" type="submit">Modifica intrebarea</button>
+                <button class="btn btn-sm btn-success" type="submit">Edit question</button>
 
             </form>
             <form method="post" asp-controller="Questions" asp-action="Delete" asp-route-id="@Model.Id">
 
-                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge intrebarea</button>
+                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Delete question</button>
 
             </form>
         </div>

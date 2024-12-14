@@ -57,9 +57,6 @@ namespace QueFlow.Controllers
         {
             Category category = db.Categories.Include("Questions").Include("Questions.User").Where(a=>a.Id==id).First();
 
-            var search = "";
-            ViewBag.SearchString = search;
-
             int per_page = 4;
             int totalItems=category.Questions.Count();
             var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
@@ -73,15 +70,7 @@ namespace QueFlow.Controllers
             var pagedQuestions=category.Questions.Skip(offset).Take(per_page).ToList();
             category.Questions = pagedQuestions;
             ViewBag.lastPage= Math.Ceiling((float)totalItems / (float)pagedQuestions.Count());
-            if (search != "")
-            {
-                ViewBag.PageBaseURL = "Categories/Show/id="+id+"&?search="+search + "&page";
-            }
-            else
-            {
-                ViewBag.PageBaseURL = "Categories/Show/id=" + id + "&?page";
-            }
-
+            ViewBag.PageBaseURL = "/Categories/Show/" + id + "?page";
             return View(category);
         }
         [Authorize(Roles ="Admin")]
@@ -97,7 +86,7 @@ namespace QueFlow.Controllers
             {
                 db.Categories.Add(cat);
                 db.SaveChanges();
-                TempData["message"] = "Categoria a fost adaugata cu succes.";
+                TempData["message"] = "The category has been added";
                 return RedirectToAction("Index");
             }
             else
@@ -121,7 +110,7 @@ namespace QueFlow.Controllers
                 category.Name = nou.Name;
                 category.Description = nou.Description;
                 db.SaveChanges();
-                TempData["message"] = "Categoria a fost modificata cu succes.";
+                TempData["message"] = "The category has been modified";
                 return RedirectToAction("Index");
             }
             else
@@ -146,7 +135,7 @@ namespace QueFlow.Controllers
             }
             db.Categories.Remove(categ);
             db.SaveChanges();
-            TempData["message"] = "Felicitari, ai eliminat o categorie inocenta ce avea o familie iubitoare!";
+            TempData["message"] = "The category has been deleted";
             return RedirectToAction("Index");
         }
     }

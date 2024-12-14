@@ -1,8 +1,27 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<div class="text-center">
+    <h1>Welcome to QueFlow!</h1>
+    <br />
+    @foreach (var categ in ViewBag.Categories){
+        <div class="categs">
+            <h3><a href="/Categories/Show/@categ.Id" style="color:darkgreen;font-weight:bolder;">@categ.Name</a></h3>
+            <div class="questions">
+                @foreach(var Model in categ.Questions){
+                    <div class="card-body hpq">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+                        <h3 class="card-title alert-success py-3 px-3 rounded-2"><a href="/Questions/Show/@Model.Id" style="color:black;font-weight:bold;">@Model.Title</a></h3>
+
+                        <div class="card-text">@Model.Content</div>
+
+                        <div class="d-flex justify-content-between flex-row mt-5">
+                            <div><i class="bi bi-globe"></i> <a href="/Categories/Show/@categ.Id" style="color:darkgreen;">@categ.Name</a></div>
+                            <span class="alert-success px-1 align-content-center">@Model.Date</span>
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+        <br />
+    }
 </div>

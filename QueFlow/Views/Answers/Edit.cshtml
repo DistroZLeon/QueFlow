@@ -2,10 +2,11 @@
 <h2>Editarea raspunsului</h2>
 <br />
 <form method="post" action="/Answers/Edit/@Model.Id">
-	<label>Continutul raspunsului</label>
+	<label>Answer content</label>
+	<br />
 	<textarea asp-for="Text">@Model.Text</textarea>
 	<span asp-asp-validation-for="Text" class="tesxt-danger"></span>
 	<br />
 	<hr />
-	<button class="btn btn-primary" type="submit" >Editeaza raspunsul</button>
+	<button class="btn btn-primary" type="submit" >Edit answer</button>
 </form>

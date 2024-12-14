@@ -1,6 +1,6 @@
 ﻿
 
-<h2 class="text-center">Afisare intrebari</h2>
+<h2 class="text-center">All questions</h2>
 
 <br />
 
@@ -11,7 +11,7 @@
 
 
 <div class="d-flex justify-content-center">
-    <a class="btn btn-outline-success" href="/Questions/New">Pune o intrebare</a>
+    <a class="btn btn-outline-success" href="/Questions/New">Ask a question</a>
     <br />
 
 </div>
@@ -21,7 +21,7 @@
 
 @foreach (var Model in ViewBag.Questions)
 {
-    <div class="card">
+    <div class="card questions">
 
         <partial name="QuestionInfo" model="Model" />
 
@@ -30,5 +30,26 @@
     <br />
     <br />
 }
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="@ViewBag.PaginationBaseUrl=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
 
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item"> <a class="page-link" href="@ViewBag.PaginationBaseUrl=@i">@(i)</a> </li>
+            }
+
+            <li class="page-item">
+                <a class="page-link" href="@ViewBag.PaginationBaseUrl=@(ViewBag.lastPage)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
 
