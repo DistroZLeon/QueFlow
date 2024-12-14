@@ -11,7 +11,7 @@
             <form method="post" asp-action="New" asp-controller="Questions">
                 <div asp-validation-summary="All" class="text-danger"></div><br />
                 <div class="form-group">
-                    <label  asp-for="Title" class="form-label">Titlu intrebare</label>
+                    <label  asp-for="Title" class="form-label">Question title</label>
                     <br />
                     <input asp-for="Title" class="form-control" />
                     <span asp-validation-for="Title" class="text-danger"></span>
@@ -19,19 +19,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Content" class="form-labe">Continut intrebare</label>
+                    <label asp-for="Content" class="form-labe">Question content</label>
                     <textarea asp-for="Content"  class="form-control"></textarea>
                     <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <br />
                 <div class="form-group">
                     <select asp-for="CategoryId" asp-items="Model.Categ" class="form-control">
-                        <option value="">Selectati categoria</option>
+                        <option value="">Select a category</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
                 <br />
-                <button class="btn btn-success" type="submit">Adauga intrebarea</button>
+                <button class="btn btn-success" type="submit">Add question</button>
 
             </form>
         </div>

@@ -1,4 +1,4 @@
-﻿<h2>@ViewBag.Title</h2>
+﻿<h2>All categories</h2>
 <br/>
 
 @if(TempData.ContainsKey("message"))
@@ -10,12 +10,12 @@
 
 @foreach(var category in ViewBag.Categories)
 {
-		<h3>@Html.Label("Name", "Denumirea categoriei")</h3>
+		<h3>@Html.Label("Name", "Category name")</h3>
 	<div >
 		<h4><a style="color:darkgreen;font-weight:bolder;" asp-action="Show" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a></h4>
 		@if (User.IsInRole("Admin"))
 		{
-			<h5><a class="btn btn-otline-success w-auto" style="color:darkgreen;" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Editarea categorie</a></h5>
+			<h5><a class="btn btn-success" asp-action="Edit" asp-controller="Categories" asp-route-id="@category.Id">Edit category</a></h5>
 		}
 	</div>
 	<br/>
@@ -47,5 +47,5 @@
 <br />
 @if (User.IsInRole("Admin"))
 {
-	<a class="btn alert-success" asp-action="New" asp-controller="Categories">Adauga o noua categorie</a>
+	<a class="btn alert-success" asp-action="New" asp-controller="Categories">Add a new category</a>
 }

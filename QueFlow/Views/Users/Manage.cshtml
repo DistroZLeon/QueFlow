@@ -1,0 +1,64 @@
+﻿@model QueFlow.Models.ApplicationUser
+<h2>Edit Profile</h2>
+
+@if (Model.ProfPic != null)
+{
+    <div>
+        <img src="@Model.ProfPic" alt="User's avatar" width="150" height="150" />
+    </div>
+}
+else
+{
+    <p>No avatar uploaded.</p>
+}
+
+<form asp-area="" asp-action="Manage" asp-controller="Users" enctype="multipart/form-data" method="post">
+    <label asp-for="Alias" class="control-label">Username</label>
+    <input asp-for="Alias" class ="form-control" />
+    <span asp-validation-for="Alias" class="text-danger"></span>
+
+    <input asp-for="UserName" type="hidden" class="form-control" />
+
+    <label asp-for="Nume" class="control-label"></label>
+    <input asp-for="Nume" class="form-control" />
+    <span asp-validation-for="Nume" class="text-danger"></span>
+
+    <label asp-for="Email" class="control-label"></label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+
+    <label asp-for="Desc" class="control-label"></label>
+    <textarea asp-for="Desc" class="form-control"> </textarea>
+
+    <label for="ProfPic">Change Profile Picture</label>
+    <input type="file" name="ProfilePic" class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<br />
+<h2>Latest activity</h2>
+<h3>Questions</h3>
+<div class="hpq">
+    @foreach (var Model in ViewBag.Questions){
+        <partial name="QuestionInfo" model="Model"/>
+    }
+</div>
+<br />
+<h3>Answers</h3>
+<div class="hpq">
+    @foreach (var answer in ViewBag.Answers)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div>
+                        <p>@answer.Text</p>
+                        <small>@answer.DatePosted</small>
+                        <div><i class="bi bi-person"></i>@answer.User.UserName</div>
+                    <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

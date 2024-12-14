@@ -2,47 +2,47 @@
 
 <form asp-area="" asp-controller="Users" asp-action="Edit" method="post" asp-route-id="@Model.Id">
     <br />
-    <label asp-for="UserName">UserName</label>
+    <label asp-for="Alias">Username</label>
     <br />
     <input asp-for="UserName" class="form-control" style="background-color:white" />
 
     <br />
-    <label asp-for="ProfPic">Avatarul utilizator</label>
+    <label asp-for="ProfPic">User avatar</label>
     <br />
     <div>
         @if (!string.IsNullOrEmpty(Model.ProfPic))
         {
-            <img src="@Model.ProfPic" alt="Avatar Utilizator" style="max-width:100px; max-height:100px;" />
+            <img src="@Model.ProfPic" alt="User avatar" style="max-width:100px; max-height:100px;" />
         }
         else
         {
-            <p>Nu există avatar.</p>
+            <p>User has no avatar</p>
         }
         <input type="hidden" id="ClearProfPic" name="ProfPic" value="@Model.ProfPic" />
-        <button type="button" class="btn btn-outline-danger" onclick="clearField('ProfPic', 'C:/Users/alyst/Downloads/WhatsApp Image 2024-11-25 at 12.00.43 (1).jpeg');">Stergere Avatar</button>
+        <button type="button" class="btn btn-outline-danger" onclick="clearField('ProfPic', '/images/profile-pictures/default.jpg');">Delete avatar</button>
     </div>
 
     <br />
-    <label asp-for="Desc">Descrierea utilizator</label>
+    <label asp-for="Desc">User description</label>
     <br />
     <div>
         <input asp-for="Desc" class="form-control" style="background-color:white" readonly />
-        <button type="button" class="btn btn-outline-danger" onclick="clearField('Desc', '');">Stergere Descriere</button>
+        <button type="button" class="btn btn-outline-danger" onclick="clearField('Desc', '');">Delete description</button>
     </div>
 
     <br />
-    <label asp-for="Nume">Numele utilizator</label>
+    <label asp-for="Nume">User's name</label>
     <br />
     <input asp-for="Nume" class="form-control" style="background-color:white" readonly />
 
     <br />
-    <label asp-for="Email">Email utilizator</label>
+    <label asp-for="Email">User's Email </label>
     <br />
     <input asp-for="Email" class="form-control" style="background-color:white" readonly />
 
     <br />
     <select name="newRole" class="form-control">
-        <option selected>Selectati rolul</option>
+        <option selected>Select role</option>
 
         @foreach (var role in ViewBag.AllRoles)
         {
@@ -58,7 +58,7 @@
     </select>
 
     <br />
-    <button type="submit" class="btn btn-outline-success">Aplica modificarile</button>
+    <button type="submit" class="btn btn-outline-success">Apply changes</button>
 
     <script>
         function clearField(fieldName, newValue) {
@@ -71,5 +71,5 @@
 </form>
 <hr />
 <form asp-controller="Users" asp-action="Delete" method="post" asp-route-id="@Model.Id">
-    <button class="btn btn-outline-danger" type="submit">Stergere utilizator</button>
+    <button class="btn btn-outline-danger" type="submit">Delete user</button>
 </form>
