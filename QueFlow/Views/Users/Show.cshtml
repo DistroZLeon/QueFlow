@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model QueFlow.Models.ApplicationUser
+
+<div class="card mt-3" style="height:100%; width:100%;">
+	<img src="@Model.ProfPic" alt="Avatar utilizator" style="max-width:100px;max-heigth:100px;"/><h2><a class="card-title d-flex justify-content-center" asp-area="" asp-controller="Users" asp-action="Index" style="color:darkgreen;font-weight:bolder;">@Model.UserName</a></h2>
+	<div class="card-body">
+		@if(Model.Nume!=null)
+		{
+			<h3 style="font-weight:bold;">Numele utilizatorului: </h3>
+			<h4>@Model.Nume</h4>
+		}
+		@if(Model.Desc!=null)
+		{
+			<h3 style="font-weight:bold;">Descrierea utilizatorului: </h3>
+			<h4>@Model.Desc</h4>
+		}
+		<h4><i class="bi bi-envelope"></i>Email: @Model.Email</h4>
+		@if(ViewBag.Roles.Count>0)
+		{
+			<p><h3><i class="bi bi-person"></i> Rolurile utilizatorului:</h3></p>
+			@foreach(var role in ViewBag.Roles)
+			{
+				<span class="rounded-pill bg-dark mr-2 px-4 py-2 text-white">@role</span>
+			}
+		}
+	</div>
+</div>

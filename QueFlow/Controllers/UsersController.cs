@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QueFlow.Data;
 using QueFlow.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QueFlow.Controllers
 {
@@ -12,18 +14,18 @@ namespace QueFlow.Controllers
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext db;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public UsersController(
             ApplicationDbContext context,
-            UserManager<ApplicationUser> uManager,
-            RoleManager<IdentityRole> rManager
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager
         )
         {
             db = context;
-            userManager = uManager;
-            roleManager = rManager; 
+            _userManager = userManager;
+            _roleManager = roleManager; 
         }
         public IActionResult Index()
         {
@@ -39,18 +41,17 @@ namespace QueFlow.Controllers
         public async Task<ActionResult> Show(string id)
         {
             ApplicationUser user=db.Users.Find(id);
-            var roles = await userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
             ViewBag.Roles = roles;
-            ViewBag.UserCurent = await userManager.GetUserAsync(User);
+            ViewBag.UserCurent = await _userManager.GetUserAsync(User);
             return View(user);
         }
         public async Task<ActionResult> Edit(string id)
         {
             ApplicationUser user= db.Users.Find(id);
-            ViewBag.AllRoles = roleManager.Roles;
-            var roleNames = await userManager.GetRolesAsync(user);
-            ViewBag.UserRole= roleManager.Roles
-                .Where(r=>roleNames.Contains(r.Name)).Select(r=>r.Id).First();
+            ViewBag.AllRoles = GetAllRoles();
+            var roleNames = await _userManager.GetRolesAsync(user);
+            ViewBag.UserRole= _roleManager.Roles.Where(r=>roleNames.Contains(r.Name)).Select(r=>r.Id).FirstOrDefault();
             return View(user);
         }
         [HttpPost]
@@ -58,19 +59,19 @@ namespace QueFlow.Controllers
         {
             var user= db.Users.Find(id);
             user.AllRoles = GetAllRoles();
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
+                user.UserName= newuser.UserName;
                 user.Desc = newuser.Desc;
                 user.ProfPic= newuser.ProfPic;
                 var roles = db.Roles.ToList();
-                foreach (var role in roles)
+                foreach (var role in roles) 
                 {
-                    await userManager.RemoveFromRoleAsync(user, role.Name);                
+                    await _userManager.RemoveFromRoleAsync(user, role.Name);                
                 }
-                var roleName=await roleManager.FindByIdAsync(newrole);
-                await userManager.AddToRoleAsync(user,roleName.ToString());
+                var roleName=await _roleManager.FindByIdAsync(newrole);
+                await _userManager.AddToRoleAsync(user,roleName.ToString());
                 db.SaveChanges();
-
             }
             return RedirectToAction("Index");
         }
@@ -88,15 +89,16 @@ namespace QueFlow.Controllers
             }
             if (user.Questions.Count() > 0)
             {
-                foreach (var question in user.Questions)
+                foreach (var que in user.Questions)
                 {
-                    foreach(var ans in question.Answers)
-                    {
-                        db.Answers.Remove(ans);
-                    }
-                    db.Questions.Remove(question);
+                    Question question = db.Questions.Include("Answers")
+                                                .Where(q => q.Id == que.Id)
+                                                .First();
+                    foreach (var ans in question.Answers) db.Answers.Remove(ans);
+                    db.Questions.Remove(que);
                 }
             }
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
 

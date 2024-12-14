@@ -5,7 +5,7 @@
 	{
 		<div class="col-4 mb-4">
 			<div class="card" style="height:100%; width: 100%;">
-				<div class="card-title d-flex justify-content-center" style="font-weight:bolder;color:darkgreen;">@user.ProfPic  @user.UserName</div>
+				<div class="card-title d-flex justify-content-center"><img src="@user.ProfPic" alt="Avatar utilizator" style="max-width:100px;max-heigth:100px;" /><a asp-area="" asp-controller="Users" asp-action="Show" asp-route-id="@user.Id" style="font-weight:bolder;color:darkgreen;text-decoration:none;"> @user.UserName</a></div>
 				<div class="card-body d-flex justify-content-between flex-column">
 					<div class="card-text">
 						@if(user.Desc!=null)
@@ -21,10 +21,6 @@
 
 							<div>
 								<a asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-success">Editare utilizator</a>
-							</div>
-
-							<div>
-								<a asp-controller="Users" asp-action="Show" asp-route-id="@user.Id" class="btn btn-sm btn-outline-success">Vizualizare utilizator</a>
 							</div>
 
 						</div>

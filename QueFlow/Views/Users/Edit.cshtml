@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model QueFlow.Models.ApplicationUser
+
+<form asp-area="" asp-controller="Users" asp-action="Edit" method="post" asp-route-id="@Model.Id">
+    <br />
+    <label asp-for="UserName">UserName</label>
+    <br />
+    <input asp-for="UserName" class="form-control" style="background-color:white" />
+
+    <br />
+    <label asp-for="ProfPic">Avatarul utilizator</label>
+    <br />
+    <div>
+        @if (!string.IsNullOrEmpty(Model.ProfPic))
+        {
+            <img src="@Model.ProfPic" alt="Avatar Utilizator" style="max-width:100px; max-height:100px;" />
+        }
+        else
+        {
+            <p>Nu există avatar.</p>
+        }
+        <input type="hidden" id="ClearProfPic" name="ProfPic" value="@Model.ProfPic" />
+        <button type="button" class="btn btn-outline-danger" onclick="clearField('ProfPic', 'C:/Users/alyst/Downloads/WhatsApp Image 2024-11-25 at 12.00.43 (1).jpeg');">Stergere Avatar</button>
+    </div>
+
+    <br />
+    <label asp-for="Desc">Descrierea utilizator</label>
+    <br />
+    <div>
+        <input asp-for="Desc" class="form-control" style="background-color:white" readonly />
+        <button type="button" class="btn btn-outline-danger" onclick="clearField('Desc', '');">Stergere Descriere</button>
+    </div>
+
+    <br />
+    <label asp-for="Nume">Numele utilizator</label>
+    <br />
+    <input asp-for="Nume" class="form-control" style="background-color:white" readonly />
+
+    <br />
+    <label asp-for="Email">Email utilizator</label>
+    <br />
+    <input asp-for="Email" class="form-control" style="background-color:white" readonly />
+
+    <br />
+    <select name="newRole" class="form-control">
+        <option selected>Selectati rolul</option>
+
+        @foreach (var role in ViewBag.AllRoles)
+        {
+            @if (ViewBag.UserRole == role.Value)
+            {
+                <option selected="selected" value="@role.Value">@role.Text</option>
+            }
+            else
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
+        }
+    </select>
+
+    <br />
+    <button type="submit" class="btn btn-outline-success">Aplica modificarile</button>
+
+    <script>
+        function clearField(fieldName, newValue) {
+            const visibleInput = document.querySelector(`[name='${fieldName}']`);
+            if (visibleInput) {
+                visibleInput.value = newValue;
+            }
+        }
+    </script>
+</form>
+<hr />
+<form asp-controller="Users" asp-action="Delete" method="post" asp-route-id="@Model.Id">
+    <button class="btn btn-outline-danger" type="submit">Stergere utilizator</button>
+</form>
