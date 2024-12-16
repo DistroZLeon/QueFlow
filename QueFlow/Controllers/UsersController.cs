@@ -65,7 +65,8 @@ namespace QueFlow.Controllers
         public async Task<ActionResult> Edit(string id, ApplicationUser newuser, [FromForm] string newrole)
         {
             var user = db.Users.Find(id);
-            if (newuser.ProfPic != "/images/profile-pictures/default.jpg" && newuser.ProfPic != user.ProfPic) newuser.ProfPic = "images/profile-pictures/default.jgp";
+            if (newuser.ProfPic != "/images/profile-pictures/default.jpg" && newuser.ProfPic != user.ProfPic) newuser.ProfPic = "/images/profile-pictures/default.jpg";
+            if (newuser.Desc != "" && newuser.Desc != user.Desc) newuser.Desc = "";
             user.AllRoles = GetAllRoles();
             if (!ModelState.IsValid)
             {
@@ -147,6 +148,7 @@ namespace QueFlow.Controllers
                 user.Alias = NewUser.Alias;
                 user.Nume = NewUser.Nume;
                 user.Email = NewUser.Email;
+                user.Desc = NewUser.Desc;
                 user.NormalizedEmail = NewUser.Email.ToUpper();
                 user.UserName = NewUser.Email;
                 user.NormalizedUserName = NewUser.Email.ToUpper();
