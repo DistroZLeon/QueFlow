@@ -65,8 +65,18 @@ namespace QueFlow.Controllers
         public async Task<ActionResult> Edit(string id, ApplicationUser newuser, [FromForm] string newrole)
         {
             var user = db.Users.Find(id);
-            if (newuser.ProfPic != "images/profile-pictures/default.jgp" && newuser.ProfPic != user.ProfPic) newuser.ProfPic = "images/profile-pictures/default.jgp";
+            if (newuser.ProfPic != "/images/profile-pictures/default.jpg" && newuser.ProfPic != user.ProfPic) newuser.ProfPic = "images/profile-pictures/default.jgp";
             user.AllRoles = GetAllRoles();
+            if (!ModelState.IsValid)
+            {
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        Console.WriteLine(error.ErrorMessage); // Log or debug this line
+                    }
+                }
+            }
             if (ModelState.IsValid)
             {
                 user.UserName = newuser.UserName;

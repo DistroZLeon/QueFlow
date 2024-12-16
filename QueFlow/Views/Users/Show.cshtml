@@ -1,7 +1,7 @@
 ﻿@model QueFlow.Models.ApplicationUser
 
 <div class="card mt-3" style="height:100%; width:100%;">
-	<img src="@Model.ProfPic" alt="User avatar" style="max-width:100px;max-heigth:100px;"/><h2><a class="card-title d-flex justify-content-center" asp-area="" asp-controller="Users" asp-action="Index" style="color:darkgreen;font-weight:bolder;">@Model.UserName</a></h2>
+	<img src="@Model.ProfPic" alt="User avatar" style="max-width:100px;max-heigth:100px;"/><h2><a class="card-title d-flex justify-content-center" asp-area="" asp-controller="Users" asp-action="Index" style="color:darkgreen;font-weight:bolder;">@Model.Alias</a></h2>
 	<div class="card-body">
 		@if(Model.Nume!=null)
 		{
