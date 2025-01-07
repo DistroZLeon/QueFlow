@@ -15,9 +15,26 @@
 
 <br />
 <br />
-
-@foreach (var answer in Model.Answers)
+<p>Sort by:</p>
+@if (ViewBag.Filter != "1")
 {
+    <a class="btn btn-outline-success" href="@ViewBag.FilterUrl=1">Date</a>
+}
+else
+{
+    <a class="btn btn-outline-danger" href="@ViewBag.FilterUrl=2">Date</a>
+}
+@if (ViewBag.Filter != "3")
+{
+    <a class="btn btn-outline-success" href="@ViewBag.FilterUrl=3">Alphabetical order</a>
+}
+else
+{
+    <a class="btn btn-outline-danger" href="@ViewBag.FilterUrl=4">Alphabetical order</a>
+}
+<br />
+<br />
+@foreach (var answer in ViewBag.Answers){
     <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
@@ -79,7 +96,6 @@
 
     </div>
 }
-
 <div class="container">
 
     <div class="row">
