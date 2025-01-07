@@ -17,8 +17,23 @@
 </div>
 
 <br />
-
-
+<p>Sort by:</p>
+@if (ViewBag.Filter != "1")
+{
+    <a class="btn btn-outline-success" href="@ViewBag.PaginationFilterUrl=1">Date</a>
+}
+else{
+    <a class="btn btn-outline-danger" href="@ViewBag.PaginationFilterUrl=2">Date</a>
+}
+@if (ViewBag.Filter != "3")
+{
+    <a class="btn btn-outline-success" href="@ViewBag.PaginationFilterUrl=3">Answers</a>
+}
+else{
+    <a class="btn btn-outline-danger" href="@ViewBag.PaginationFilterUrl=4">Answers</a>
+}
+<br />
+<br />
 @foreach (var Model in ViewBag.Questions)
 {
     <div class="card questions">

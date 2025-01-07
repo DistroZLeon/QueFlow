@@ -33,6 +33,7 @@ namespace QueFlow.Controllers
                 ViewBag.Msg = TempData["message"].ToString();
             }
             var search = "";
+            var filter = "";
             if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
             {
                 search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
@@ -47,13 +48,70 @@ namespace QueFlow.Controllers
                                          c => c.Text.Contains(search)
                                         ).Select(c => (int)c.QuestionId).ToList();
                 List<int> mergedIds = articleIds.Union(articleIdsOfCommentsWithSearchString).ToList();
-                questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
-                                      .Include("Category")
-                                      .Include("User")
-                                      .OrderByDescending(a => a.Date);
+                if (Convert.ToString(HttpContext.Request.Query["filter"]) == null) {
+                    questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                          .Include("Category")
+                                          .Include("User")
+                                          .OrderByDescending(a => a.Date);
+                }
+                else
+                {
+                    filter = Convert.ToString(HttpContext.Request.Query["filter"]);
+                    if (filter == "1")
+                    {
+                        questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                          .Include("Category")
+                                          .Include("User")
+                                          .OrderBy(a => a.Date);
+                    }
+                    if (filter == "2")
+                    {
+                        questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                          .Include("Category")
+                                          .Include("User")
+                                          .OrderByDescending(a => a.Date);
+                    }
+                    if (filter == "3")
+                    {
+                        questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                          .Include("Category")
+                                          .Include("User")
+                                          .OrderBy(a => a.Answers.Count);
+                    }
+                    if(filter == "4")
+                    {
+                        questions = db.Questions.Where(article => mergedIds.Contains(article.Id))
+                                          .Include("Category")
+                                          .Include("User")
+                                          .OrderByDescending(a => a.Answers.Count);
+                    }
+                }
 
             }
-
+            else if(Convert.ToString(HttpContext.Request.Query["filter"]) != null)
+            {
+                filter = Convert.ToString(HttpContext.Request.Query["filter"]);
+                if (filter == "1")
+                {
+                    questions = db.Questions.Include("Category").Include("User")
+                                      .OrderBy(a => a.Date);
+                }
+                if (filter == "2")
+                {
+                    questions = db.Questions.Include("Category").Include("User")
+                                      .OrderByDescending(a => a.Date);
+                }
+                if (filter == "3")
+                {
+                    questions = db.Questions.Include("Category").Include("User")
+                                      .OrderBy(a => a.Answers.Count);
+                }
+                if (filter == "4")
+                {
+                    questions = db.Questions.Include("Category").Include("User")
+                                      .OrderByDescending(a => a.Answers.Count);
+                }
+            }
             ViewBag.SearchString = search;
             int _perPage = 5;
             int totalItems = questions.Count();
@@ -68,24 +126,57 @@ namespace QueFlow.Controllers
             ViewBag.Questions = paginatedQuestions;
             if (search != "")
             {
-                ViewBag.PaginationBaseUrl = "/Questions/Index/?search=" + search + "&page";
+                if (filter != "")
+                {
+                    ViewBag.PaginationBaseUrl = "/Questions/Index/?search=" + search + "&filter=" + filter + "&page";
+                    ViewBag.PaginationFilterUrl = "/Questions/Index/?search=" + search + "&filter";
+                }
+                else
+                {
+                    ViewBag.PaginationBaseUrl = "/Questions/Index/?search=" + search + "&page";
+                    ViewBag.PaginationFilterUrl = "/Questions/Index/?search=" + search + "&filter";
+                }
             }
             else
             {
                 ViewBag.PaginationBaseUrl = "/Questions/Index/?page";
+                ViewBag.PaginationFilterUrl = "/Questions/Index/?filter";
             }
-
+            ViewBag.Filter = filter;
             return View();
         }
         public IActionResult Show(int id)
         {
             SetAccessRights();
-            Question question = db.Questions.Include("Category").Include("Answers").Include("User")
+            Question question = db.Questions.Include("Category").Include("Answers.User").Include("User")
                               .Where(a => a.Id == id)
                               .First();
-
+            Console.WriteLine(question.Answers);
             ViewBag.Question = question;
-
+            var filter = "";
+            ViewBag.Answers = question.Answers.ToList();
+            if (Convert.ToString(HttpContext.Request.Query["filter"]) != null)
+            {
+                filter = Convert.ToString(HttpContext.Request.Query["filter"]);
+                if (filter == "1")
+                {
+                    ViewBag.Answers = question.Answers.OrderBy(a => a.DatePosted).ToList();
+                }
+                if (filter == "2")
+                {
+                    ViewBag.Answers = question.Answers.OrderByDescending(a => a.DatePosted).ToList();
+                }
+                if (filter == "3")
+                {
+                    ViewBag.Answers = question.Answers.OrderBy(a => a.Text).ToList();
+                }
+                if (filter == "4")
+                {
+                    ViewBag.Answers = question.Answers.OrderByDescending(a => a.Text).ToList();
+                }
+            }
+            ViewBag.FilterUrl = "/Questions/Show/" + id.ToString() + "?filter";
+            ViewBag.Filter = filter;
             ViewBag.Category = question.Category;
 
             if (TempData.ContainsKey("message"))
