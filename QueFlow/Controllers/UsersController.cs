@@ -66,7 +66,7 @@ namespace QueFlow.Controllers
         {
             var user = db.Users.Find(id);
             if (newuser.ProfPic != "/images/profile-pictures/default.jpg" && newuser.ProfPic != user.ProfPic) newuser.ProfPic = "/images/profile-pictures/default.jpg";
-            if (newuser.Desc != "" && newuser.Desc != user.Desc) newuser.Desc = "";
+            if (newuser.Desc != "" && newuser.Desc != user.Desc) newuser.Desc = null;
             user.AllRoles = GetAllRoles();
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace QueFlow.Controllers
             }
             if (ModelState.IsValid)
             {
-                user.UserName = newuser.UserName;
+                user.Alias = newuser.Alias;
                 user.Desc = newuser.Desc;
                 user.ProfPic = newuser.ProfPic;
                 var roles = db.Roles.ToList();

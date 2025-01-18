@@ -69,7 +69,7 @@ namespace QueFlow.Controllers
 
             var pagedQuestions=category.Questions.Skip(offset).Take(per_page).ToList();
             category.Questions = pagedQuestions;
-            ViewBag.lastPage= Math.Ceiling((float)totalItems / (float)pagedQuestions.Count());
+            ViewBag.lastPage= Math.Ceiling((float)totalItems / (float)per_page);
             ViewBag.PageBaseURL = "/Categories/Show/" + id + "?page";
             return View(category);
         }
