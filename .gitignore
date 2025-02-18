@@ -1,7 +1,0 @@
-.vs/
-# Ignoră fișierele generate de NuGet
-QueFlow/obj/
-QueFlow/bin/
-
-# Ignore NuGet
-.nuget/
